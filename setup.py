@@ -14,7 +14,7 @@ setup(
     install_requires=[
         "requests>=2.26.0",
         "gensim>=4.1.2",
-        "fasttext>=0.9.2",
+        "fasttext-wheel>=0.9.2",
         "datasets>=1.16.1",
         "tqdm>=4.62.3",
         "scipy>=1.7.3",
