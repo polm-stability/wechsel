@@ -238,7 +238,7 @@ def create_target_embeddings(
 
         return best
 
-    source_vocab = source_tokenizer.vocab
+    source_vocab = source_tokenizer.get_vocab()
 
     target_matrix = np.zeros(
         (len(target_tokenizer), source_matrix.shape[1]), dtype=source_matrix.dtype
@@ -249,8 +249,11 @@ def create_target_embeddings(
         source_matrix.std(0),
     )
 
+    target_vocab = target_tokenizer.get_vocab()
+    source_vocab = source_tokenizer.get_vocab()
+
     random_fallback_matrix = np.random.RandomState(1234).normal(
-        mean, std, (len(target_tokenizer.vocab), source_matrix.shape[1])
+        mean, std, (len(target_vocab), source_matrix.shape[1])
     )
 
     batch_size = 1024
@@ -300,9 +303,9 @@ def create_target_embeddings(
             token = [token]
 
         for t in token:
-            if t in target_tokenizer.vocab:
-                target_matrix[target_tokenizer.vocab[t]] = source_matrix[
-                    source_tokenizer.vocab[t]
+            if t in target_vocab:
+                target_matrix[target_vocab[t]] = source_matrix[
+                    source_vocab[t]
                 ]
 
     logging.info(
